@@ -7,9 +7,9 @@
   position: fixed;
   top: 2%;
   right: 2%;
-  width: 20px;
-  height: 20px;
+  border: none;
   padding: 0;
+  width: auto;
 }
 
 #message-form{
