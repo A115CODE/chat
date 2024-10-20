@@ -29,20 +29,3 @@ loginButton.addEventListener('click', async () => {
     window.location.href = './chat/chat.html';
   }
 });
-
-// Registro de usuario
-signUpButton.addEventListener('click', async () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-
-  const { user, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-
-  if (error) {
-    alert('Error en el registro:', error.message);
-  } else {
-    alert('Registro exitoso. Verifica tu correo electrónico.');
-  }
-});
