@@ -10,14 +10,14 @@
   <body>
     <div id="CHAT_APP">
       <div id="chat-box" class="chat-box"></div>
-      <div class="input-box">
-        <input
-          type="text"
+      <form id="message-form" class="input-box">
+        <textarea
           id="message-input"
-          placeholder="Escribe tu mensaje"
-        />
-        <button id="send-button">Enviar</button>
-      </div>
+          placeholder="\"
+          required
+        ></textarea>
+        <button type="submit" id="send-button">></button>
+      </form>
 
       <button id="logout_button">x</button>
     </div>

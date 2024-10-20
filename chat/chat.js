@@ -31,7 +31,9 @@ const sendButton = document.getElementById('send-button');
 const logoutButton = document.getElementById('logout_button'); // Botón de cerrar sesión
 
 // Función para enviar mensajes
-async function sendMessage() {
+async function sendMessage(event) {
+  event.preventDefault(); // Evitar recarga del formulario
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -61,8 +63,9 @@ async function sendMessage() {
   }
 }
 
-// Escuchar el clic del botón de enviar
-sendButton.addEventListener('click', sendMessage);
+// Escuchar el evento submit del formulario
+const messageForm = document.getElementById('message-form');
+messageForm.addEventListener('submit', sendMessage);
 
 // Función para mostrar mensajes
 async function loadMessages() {
@@ -82,10 +85,8 @@ async function loadMessages() {
     const messageElement = document.createElement('div');
     messageElement.id = 'DATA';
     messageElement.innerHTML = `
-    
-    <p>${user}<span class="puntos">:</span><span class="signo">$</span> </p>
-    <h3>${message}</h3>
-
+      <p>${user}<span class="puntos">:</span><span class="signo">$</span> </p>
+      <h3>${message}</h3>
     `;
 
     chatBox.appendChild(messageElement);
