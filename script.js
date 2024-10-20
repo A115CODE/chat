@@ -24,7 +24,7 @@ loginButton.addEventListener('click', async () => {
   if (error) {
     alert('Error en el inicio de sesión:', error.message);
   } else {
-    alert('Inicio de sesión exitoso');
+    console.log('Inicio de sesión exitoso');
     // Redirigir al chat después del inicio de sesión
     window.location.href = './chat/chat.html';
   }

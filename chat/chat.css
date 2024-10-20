@@ -19,6 +19,9 @@
   display: flex;
   align-items: center;
 }
+.copyButton{
+  cursor: pointer;
+}
 textarea{
   color: var(--color2);
   width: 250px;

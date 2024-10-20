@@ -87,10 +87,13 @@ async function loadMessages() {
 
     // Crear el botón para copiar el mensaje
     const copyButton = document.createElement('div');
+    copyButton.classList.add("copyButton");
     copyButton.innerHTML = `
-      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M9 8v3a1 1 0 0 1-1 1H5m11 4h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v1m4 3v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7.13a1 1 0 0 1 .24-.65L7.7 8.35A1 1 0 0 1 8.46 8H13a1 1 0 0 1 1 1Z"/>
-      </svg>
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M7 9v6a4 4 0 0 0 4 4h4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1v2Z" clip-rule="evenodd"/>
+      <path fill-rule="evenodd" d="M13 3.054V7H9.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 13 3.054ZM15 3v4a2 2 0 0 1-2 2H9v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
+    </svg>
+  
     `;
     copyButton.addEventListener('click', () => {
       copyToClipboard(message); // Copiar solo el contenido del mensaje
@@ -140,7 +143,7 @@ logoutButton.addEventListener('click', async () => {
   if (error) {
     console.error('Error al cerrar sesión:', error.message);
   } else {
-    alert('Sesión cerrada correctamente');
+    console.log('Sesión cerrada correctamente');
     window.location.href = '../index.html'; // Redirigir al login
   }
 });
