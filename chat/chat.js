@@ -28,7 +28,7 @@ checkUserSession();
 const chatBox = document.getElementById('chat-box');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
-const logoutButton = document.getElementById('logout-button'); // Botón de cerrar sesión
+const logoutButton = document.getElementById('logout_button'); // Botón de cerrar sesión
 
 // Función para enviar mensajes
 async function sendMessage() {

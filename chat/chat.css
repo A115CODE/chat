@@ -3,10 +3,24 @@
   height: 100vh;
 }
 
+#logout_button{
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+}
+
+.input-box{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 #DATA{
   padding: 8px 0;
-  display: flex;
-  align-items: center;
+
 }
 
 
