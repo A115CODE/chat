@@ -81,19 +81,50 @@ async function loadMessages() {
 
   chatBox.innerHTML = ''; // Limpiar el chat antes de actualizar
 
-  messages.forEach(({ user, message, created_at }) => {
+  messages.forEach(({ user, message }) => {
     const messageElement = document.createElement('div');
     messageElement.id = 'DATA';
+
+    // Crear el botón para copiar el mensaje
+    const copyButton = document.createElement('button');
+    copyButton.innerText = 'Copiar';
+    copyButton.addEventListener('click', () => {
+      copyToClipboard(message); // Copiar solo el contenido del mensaje
+    });
+
     messageElement.innerHTML = `
-      <p>${user}<span class="puntos">:</span><span class="signo">$</span> </p>
+      <p>${user}<span class="puntos">:</span><span class="signo">$</span></p>
       <h3>${message}</h3>
     `;
+
+    // Añadir el botón de copiar al elemento del mensaje
+    messageElement.appendChild(copyButton);
 
     chatBox.appendChild(messageElement);
   });
 
   chatBox.scrollTop = chatBox.scrollHeight; // Mover al final
 }
+
+// Función para copiar texto al portapapeles
+function copyToClipboard(text) {
+  // Crear un área de texto temporal
+  const tempTextArea = document.createElement('textarea');
+  tempTextArea.value = text;
+
+  // Añadir al DOM para que sea seleccionable
+  document.body.appendChild(tempTextArea);
+
+  // Seleccionar el texto y copiar
+  tempTextArea.select();
+  document.execCommand('copy');
+
+  // Eliminar el área de texto temporal
+  document.body.removeChild(tempTextArea);
+
+  console.log('Mensaje copiado al portapapeles');
+}
+
 
 // Cargar mensajes al cargar la página
 checkUserSession();
