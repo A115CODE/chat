@@ -80,9 +80,14 @@ async function loadMessages() {
 
   messages.forEach(({ user, message, created_at }) => {
     const messageElement = document.createElement('div');
-    messageElement.innerHTML = `<strong>${user}:</strong> ${message} <small>(${new Date(
-      created_at
-    ).toLocaleTimeString()})</small>`;
+    messageElement.id = 'DATA';
+    messageElement.innerHTML = `
+    
+    <p>${user}<span class="puntos">:</span><span class="signo">$</span> </p>
+    <h3>${message}</h3>
+
+    `;
+
     chatBox.appendChild(messageElement);
   });
 

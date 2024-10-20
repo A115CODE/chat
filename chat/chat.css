@@ -2,3 +2,26 @@
   width: 100%;
   height: 100vh;
 }
+
+#DATA{
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+
+p{
+  font-size: 10px;
+}
+.puntos{
+  color: var(--color3);
+}
+.signo{
+  color: var(--color4);
+}
+
+h3 {
+  color: var(--color3);
+  font-size: 12px;
+  font-weight: 100;
+}
