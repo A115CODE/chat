@@ -13,11 +13,8 @@ async function checkUserSession() {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    // Si no hay sesión activa, redirigir a la página de login
     window.location.href = 'index.html';
   } else {
-    console.log('Sesión activa:', session);
-    // Si la sesión está activa, cargar mensajes
     loadMessages();
   }
 }
@@ -27,8 +24,8 @@ checkUserSession();
 
 const chatBox = document.getElementById('chat-box');
 const messageInput = document.getElementById('message-input');
-const sendButton = document.getElementById('send-button');
-const logoutButton = document.getElementById('logout_button'); // Botón de cerrar sesión
+const messageForm = document.getElementById('message-form');
+const logoutButton = document.getElementById('logout_button');
 
 // Función para enviar mensajes
 async function sendMessage(event) {
@@ -44,7 +41,7 @@ async function sendMessage(event) {
   }
 
   const message = messageInput.value.trim();
-  const user = session.user.email; // Usa el correo del usuario autenticado como identificador
+  const user = session.user.email;
 
   if (message === '') {
     alert('Por favor ingresa un mensaje.');
@@ -53,7 +50,7 @@ async function sendMessage(event) {
 
   const { error } = await supabase
     .from('messages')
-    .insert([{ user: user, message }]);
+    .insert([{ user, message }]);
 
   if (error) {
     console.error('Error al enviar el mensaje:', error);
@@ -63,11 +60,18 @@ async function sendMessage(event) {
   }
 }
 
-// Escuchar el evento submit del formulario
-const messageForm = document.getElementById('message-form');
+// Escuchar el evento 'submit' del formulario para enviar el mensaje
 messageForm.addEventListener('submit', sendMessage);
 
-// Función para mostrar mensajes
+// Escuchar cuando se presione la tecla "Enter" en el textarea
+messageInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) { // Detecta la tecla Enter
+    event.preventDefault(); // Evita salto de línea
+    messageForm.dispatchEvent(new Event('submit')); // Dispara el evento submit
+  }
+});
+
+// Función para cargar mensajes
 async function loadMessages() {
   const { data: messages, error } = await supabase
     .from('messages')
@@ -85,27 +89,14 @@ async function loadMessages() {
     const messageElement = document.createElement('div');
     messageElement.id = 'DATA';
 
-    // Crear el botón para copiar el mensaje
-    const copyButton = document.createElement('div');
-    copyButton.classList.add("copyButton");
-    copyButton.innerHTML = `
-    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-      <path fill-rule="evenodd" d="M7 9v6a4 4 0 0 0 4 4h4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1v2Z" clip-rule="evenodd"/>
-      <path fill-rule="evenodd" d="M13 3.054V7H9.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 13 3.054ZM15 3v4a2 2 0 0 1-2 2H9v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
-    </svg>
-  
-    `;
-    copyButton.addEventListener('click', () => {
-      copyToClipboard(message); // Copiar solo el contenido del mensaje
+    messageElement.addEventListener('click', () => {
+      copyToClipboard(message); // Copiar el contenido del mensaje
     });
 
     messageElement.innerHTML = `
-      <p>${user}<span class="puntos">:</span><span class="signo">$</span></p>
+      <p>${user}<span class="puntos">:</span> <span class="signo">$</span></p>
       <h3>${message}</h3>
     `;
-
-    // Añadir el botón de copiar al elemento del mensaje
-    messageElement.appendChild(copyButton);
 
     chatBox.appendChild(messageElement);
   });
@@ -115,35 +106,24 @@ async function loadMessages() {
 
 // Función para copiar texto al portapapeles
 function copyToClipboard(text) {
-  // Crear un área de texto temporal
   const tempTextArea = document.createElement('textarea');
   tempTextArea.value = text;
 
-  // Añadir al DOM para que sea seleccionable
   document.body.appendChild(tempTextArea);
-
-  // Seleccionar el texto y copiar
   tempTextArea.select();
   document.execCommand('copy');
-
-  // Eliminar el área de texto temporal
   document.body.removeChild(tempTextArea);
 
   console.log('Mensaje copiado al portapapeles');
 }
 
-
-// Cargar mensajes al cargar la página
-checkUserSession();
-
-// Función para cerrar sesión
+// Cerrar sesión
 logoutButton.addEventListener('click', async () => {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
     console.error('Error al cerrar sesión:', error.message);
   } else {
-    console.log('Sesión cerrada correctamente');
     window.location.href = '../index.html'; // Redirigir al login
   }
 });
