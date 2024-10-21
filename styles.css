@@ -42,10 +42,8 @@ input:focus{
   align-items: center;
 }
 button {
-  width: 100px;
-  padding: 10px;
   background-color: transparent;
-  border: var(--border);
+  border: none;
   color: var(--color2);
   cursor: pointer;
 }

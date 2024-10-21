@@ -5,11 +5,8 @@
 
 #logout_button{
   position: fixed;
-  top: 2%;
+  bottom: 3%;
   right: 2%;
-  border: none;
-  padding: 0;
-  width: auto;
 }
 #message-form{
   position: fixed;
